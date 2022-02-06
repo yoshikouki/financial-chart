@@ -1,6 +1,6 @@
 import { get } from "./fetcher";
 
-export interface incomeStatementResponse {
+export type incomeStatementResponse = {
   date: string;
   symbol: string;
   reportedCurrency: string;
@@ -39,7 +39,7 @@ export interface incomeStatementResponse {
   weightedAverageShsOutDil: string;
   link: string;
   finalLink: string;
-}
+}[];
 
 export const incomeStatement = async (
   symbol: string,
