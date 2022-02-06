@@ -43,8 +43,10 @@ export type incomeStatementResponse = {
 
 export const incomeStatement = async (
   symbol: string,
-  period: "annual" | "quarter" = "annual",
-  limit: number | null = null
+  params: {
+    period?: "annual" | "quarter";
+    limit?: number | null;
+  }
 ): Promise<incomeStatementResponse> => {
-  return await get(`api/v3/income-statement/${symbol}`, { period, limit });
+  return await get(`api/v3/income-statement/${symbol}`, params);
 };
