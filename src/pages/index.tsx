@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next';
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { DefaultLayout } from '../components/layouts/default';
 import { fmp } from '../lib/financial-modeling-prep';
+import { ResponsiveBarChart } from "../components/ResponsiveBarChart";
 
 interface Props {
   data: incomeStatementResponse
@@ -14,14 +14,7 @@ const HomePage = ({ data }: Props) => {
     <DefaultLayout>
       <h1>T</h1>
       <h2>売上高</h2>
-      <ResponsiveContainer width={"100%"} height={"100%"} minWidth={300} minHeight={300} >
-        <BarChart data={incomeStatementData}>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="revenue" fill="#8884d8" />
-      </BarChart>
-      </ResponsiveContainer>
+      <ResponsiveBarChart data={incomeStatementData} />
     </DefaultLayout>
   )
 }
