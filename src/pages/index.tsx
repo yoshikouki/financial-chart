@@ -12,6 +12,8 @@ const HomePage = ({ data }: Props) => {
 
   return (
     <DefaultLayout>
+      <h1>T</h1>
+      <h2>売上高</h2>
       <ResponsiveContainer width={"100%"} height={"100%"} minWidth={300} minHeight={300} >
         <BarChart data={incomeStatementData}>
         <XAxis dataKey="date" />
