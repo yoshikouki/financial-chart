@@ -1,14 +1,14 @@
-import type { GetServerSideProps } from 'next';
-import { DefaultLayout } from '../components/layouts/default';
-import { fmp } from '../lib/financial-modeling-prep';
+import type { GetServerSideProps } from "next";
+import { DefaultLayout } from "../components/layouts/default";
 import { ResponsiveBarChart } from "../components/ResponsiveBarChart";
+import { fmp } from "../lib/financial-modeling-prep";
 
 interface Props {
-  data: incomeStatementResponse
+  data: incomeStatementResponse;
 }
 
 const HomePage = ({ data }: Props) => {
-  const incomeStatementData = data.reverse()
+  const incomeStatementData = data.reverse();
 
   return (
     <DefaultLayout>
@@ -16,16 +16,16 @@ const HomePage = ({ data }: Props) => {
       <h2>売上高</h2>
       <ResponsiveBarChart data={incomeStatementData} />
     </DefaultLayout>
-  )
-}
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fmp.incomeStatement("T", { limit: 5 })
+  const res = await fmp.incomeStatement("T", { limit: 5 });
   return {
     props: {
       data: res,
-    }
-  }
-}
+    },
+  };
+};
 
-export default HomePage
+export default HomePage;
