@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ResponsiveBarChart } from "../../components/ResponsiveBarChart";
 
 const data = [
@@ -30,20 +30,30 @@ const data = [
 ];
 
 const Img = () => {
-  const [image, setImage] = useState<HTMLCanvasElement | null>(null);
-  const chart = <ResponsiveBarChart data={data} />;
+  const [image, setImage] = useState("");
+  const chartRef = useRef(null);
+
   import("html2canvas")
     .then((html2canvas) => {
+      if (!chartRef.current) return;
+      const chart = chartRef.current;
       html2canvas
-        .default(document.body, { removeContainer: true, height: 300 })
-        .then((canvas) => document.body.appendChild(canvas));
+        .default(chart, {
+          removeContainer: true,
+          height: 300,
+          width: 300,
+          backgroundColor: "#aaa",
+        })
+        .then((canvas) => setImage(canvas.toDataURL()));
     })
     .catch((e) => {
       throw e;
     });
   return (
     <>
-      <ResponsiveBarChart data={data} />
+      <div ref={chartRef}>
+        <ResponsiveBarChart data={data} />
+      </div>
       {image}
     </>
   );
