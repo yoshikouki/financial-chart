@@ -19,7 +19,7 @@ export const ResponsiveBarChart = ({ data }) => {
         <XAxis dataKey="date" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="revenue" fill="#8884d8" />
+        <Bar dataKey="revenue" fill="#8884d8" isAnimationActive={false} />
       </BarChart>
     </ResponsiveContainer>
   );
