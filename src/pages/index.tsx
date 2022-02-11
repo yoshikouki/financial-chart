@@ -1,38 +1,32 @@
-import type { GetServerSideProps } from 'next';
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { DefaultLayout } from '../components/layouts/default';
-import { fmp } from '../lib/financial-modeling-prep';
+import type { GetServerSideProps } from "next";
+import { DefaultLayout } from "../components/layouts/default";
+import { ResponsiveBarChart } from "../components/ResponsiveBarChart";
+import { fmp } from "../lib/financial-modeling-prep";
+import { incomeStatementResponse } from "../lib/financial-modeling-prep/fundamental";
 
 interface Props {
-  data: incomeStatementResponse
+  data: incomeStatementResponse;
 }
 
 const HomePage = ({ data }: Props) => {
-  const incomeStatementData = data.reverse()
+  const incomeStatementData = data.reverse();
 
   return (
     <DefaultLayout>
       <h1>T</h1>
       <h2>売上高</h2>
-      <ResponsiveContainer width={"100%"} height={"100%"} minWidth={300} minHeight={300} >
-        <BarChart data={incomeStatementData}>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="revenue" fill="#8884d8" />
-      </BarChart>
-      </ResponsiveContainer>
+      <ResponsiveBarChart data={incomeStatementData} />
     </DefaultLayout>
-  )
-}
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fmp.incomeStatement("T", { limit: 5 })
+  const res = await fmp.incomeStatement("T", { limit: 5 });
   return {
     props: {
       data: res,
-    }
-  }
-}
+    },
+  };
+};
 
-export default HomePage
+export default HomePage;
