@@ -31,7 +31,7 @@ const data = [
 
 const Img = () => {
   const [image, setImage] = useState("");
-  const chartRef = useRef(null);
+  const chartRef = useRef<HTMLDivElement>(null!);
 
   import("html2canvas")
     .then((html2canvas) => {
@@ -40,11 +40,13 @@ const Img = () => {
       html2canvas
         .default(chart, {
           removeContainer: true,
+          width: 600,
           height: 300,
-          width: 300,
           backgroundColor: "#aaa",
         })
-        .then((canvas) => setImage(canvas.toDataURL()));
+        .then((canvas) => {
+          chart.replaceChildren(canvas)
+        });
     })
     .catch((e) => {
       throw e;
