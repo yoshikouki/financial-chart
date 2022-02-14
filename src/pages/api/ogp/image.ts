@@ -14,12 +14,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  const symbol = "AAPL";
   const [imageWidth, imageHeight] = [1200, 630];
-  const [chartWidth, chartHeight] = [imageWidth * 0.9, imageHeight * 0.8];
-  const data = (await fmp.incomeStatement("AAPL", { limit: 5 })).reverse();
+  const [chartWidth, chartHeight] = [imageWidth * 0.8, imageHeight * 0.85];
+  const data = (await fmp.incomeStatement(symbol, { limit: 5 })).reverse();
 
   const chartHTMLString = ReactDOMServer.renderToStaticMarkup(
-    OgpImageChart({ data, width: imageWidth, height: imageHeight })
+    OgpImageChart({ symbol, data, width: imageWidth, height: imageHeight })
   );
   const chartSVG = parse(chartHTMLString).querySelector("svg");
   if (!chartSVG)
@@ -35,8 +36,8 @@ export default async function handler(
   const ctx = canvas.getContext("2d");
   ctx.drawImage(
     img,
-    (imageWidth - chartWidth) / 4,
-    (imageHeight - chartHeight) / 2,
+    (imageWidth - chartWidth) / 2,
+    (imageHeight - chartHeight) / 1.5,
     chartWidth,
     chartHeight
   );

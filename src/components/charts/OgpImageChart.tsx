@@ -11,6 +11,7 @@ import {
 } from "recharts";
 
 interface Props {
+  symbol: string;
   data: any[];
   width: number;
   height: number;
@@ -31,8 +32,9 @@ const shortMonthlyDateFormat = (value: string): string => {
   return `${yearString}-${monthString}`;
 };
 
-function OgpImageChart({ data, width, height }: Props) {
+function OgpImageChart({ symbol, data, width, height }: Props) {
   const fontSize = 30;
+  const radiusRounded = fontSize * 1.2;
   const fontFamily = "sans-serif";
   const fontColor = "#444F5A";
   const baseColor = chroma.random();
@@ -43,31 +45,15 @@ function OgpImageChart({ data, width, height }: Props) {
     .colors(5);
 
   return (
-    <BarChart
-      data={data}
-      width={width}
-      height={height}
-      margin={{
-        top: height * 0.05,
-        bottom: height * 0.05,
-        left: width * 0.05,
-        right: width * 0.05,
-      }}
-      barCategoryGap={0}
-    >
-      <text
-        x={width / 2}
-        y={fontSize}
-        textAnchor="middle"
-        dominantBaseline="central"
-      >
+    <BarChart data={data} width={width} height={height} barCategoryGap={0}>
+      <text y={fontSize} textAnchor="start">
         <tspan
           fontSize={fontSize}
           fontWeight="bold"
           fontFamily={fontFamily}
           fill={fontColor}
         >
-          売上高
+          売上高 {symbol}
         </tspan>
       </text>
       <XAxis
@@ -82,15 +68,33 @@ function OgpImageChart({ data, width, height }: Props) {
         stroke={fontColor}
       />
       <YAxis hide />
-      <Bar dataKey="revenue" fill="#8884d8" radius={30}>
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-        ))}
+      <Bar dataKey="revenue" fill="#8884d8">
+        {data.map((entry, index) => {
+          let radius: number[];
+          switch (index) {
+            case 0:
+              radius = [radiusRounded, radiusRounded, 0, radiusRounded];
+              break;
+            case data.length - 1:
+              radius = [radiusRounded, radiusRounded, radiusRounded, 0];
+              break;
+            default:
+              radius = [radiusRounded, radiusRounded, 0, 0];
+              break;
+          }
+          return (
+            <Cell
+              key={`cell-${index}`}
+              fill={colors[index % colors.length]}
+              radius={radius}
+            />
+          );
+        })}
         <LabelList
           dataKey="revenue"
           formatter={(value) => shortNumberFormat(value)}
           position="insideTop"
-          dy={10}
+          dy={fontSize}
           fill="white"
           fontSize={fontSize * 1.3}
           fontWeight="bold"
