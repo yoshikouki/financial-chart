@@ -8,9 +8,9 @@ import OgpImageChart from "../../../components/OgpImageChart";
 type Data = {
   [key: string]: string;
 };
-const data = [
+const sampleData = [
   {
-    date: "2021-12-31",
+    date: "2021-1-31",
     revenue: 168864000000,
     netIncome: 20081000000,
   },
@@ -40,10 +40,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const [width, height] = [600, 400];
+  const [imageWidth, imageHeight] = [1200, 630];
+  const [chartWidth, chartHeight] = [imageWidth * 0.9, imageHeight * 0.8];
+  const data = sampleData;
 
   const chartHTMLString = ReactDOMServer.renderToStaticMarkup(
-    OgpImageChart({ data, width, height })
+    OgpImageChart({ data, width: imageWidth, height: imageHeight })
   );
   const chartSVG = parse(chartHTMLString).querySelector("svg");
   if (!chartSVG)
@@ -55,11 +57,15 @@ export default async function handler(
   const img = new Image();
   img.src = `data:image/svg+xml,<?xml version="1.0"?>${chartSVG.toString()}`;
 
-  const canvas = createCanvas(width, height);
+  const canvas = createCanvas(imageWidth, imageHeight);
   const ctx = canvas.getContext("2d");
-  ctx.fillStyle = "#FFFFFF";
-  ctx.fillRect(0, 0, width, height);
-  ctx.drawImage(img, 0, 0, width, height);
+  ctx.drawImage(
+    img,
+    (imageWidth - chartWidth) / 4,
+    (imageHeight - chartHeight) / 2,
+    chartWidth,
+    chartHeight
+  );
 
   const buffer = canvas.toBuffer();
 
