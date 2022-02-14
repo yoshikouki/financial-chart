@@ -4,37 +4,11 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "node-html-parser";
 import ReactDOMServer from "react-dom/server";
 import OgpImageChart from "../../../components/charts/OgpImageChart";
+import { fmp } from "../../../lib/financial-modeling-prep";
 
 type Data = {
   [key: string]: string;
 };
-const sampleData = [
-  {
-    date: "2021-1-31",
-    revenue: 168864000000,
-    netIncome: 20081000000,
-  },
-  {
-    date: "2020-12-31",
-    revenue: 171760000000,
-    netIncome: -5176000000,
-  },
-  {
-    date: "2019-12-31",
-    revenue: 181193000000,
-    netIncome: 13903000000,
-  },
-  {
-    date: "2018-12-31",
-    revenue: 170756000000,
-    netIncome: 19370000000,
-  },
-  {
-    date: "2017-12-31",
-    revenue: 160546000000,
-    netIncome: 29450000000,
-  },
-];
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,7 +16,7 @@ export default async function handler(
 ) {
   const [imageWidth, imageHeight] = [1200, 630];
   const [chartWidth, chartHeight] = [imageWidth * 0.9, imageHeight * 0.8];
-  const data = sampleData;
+  const data = (await fmp.incomeStatement("AAPL", { limit: 5 })).reverse();
 
   const chartHTMLString = ReactDOMServer.renderToStaticMarkup(
     OgpImageChart({ data, width: imageWidth, height: imageHeight })
