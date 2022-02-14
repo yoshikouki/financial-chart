@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import { DefaultLayout } from "../components/layouts/default";
-import { ResponsiveBarChart } from "../components/ResponsiveBarChart";
+import { ResponsiveBarChart } from "../components/charts/ResponsiveBarChart";
 import { fmp } from "../lib/financial-modeling-prep";
 import { incomeStatementResponse } from "../lib/financial-modeling-prep/fundamental";
 

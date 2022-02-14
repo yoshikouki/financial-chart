@@ -3,7 +3,7 @@ import { createCanvas, Image } from "canvas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "node-html-parser";
 import ReactDOMServer from "react-dom/server";
-import OgpImageChart from "../../../components/OgpImageChart";
+import OgpImageChart from "../../../components/charts/OgpImageChart";
 
 type Data = {
   [key: string]: string;

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ResponsiveBarChart } from "../../components/ResponsiveBarChart";
+import { ResponsiveBarChart } from "../../components/charts/ResponsiveBarChart";
 
 const data = [
   {
@@ -43,7 +43,7 @@ const Img = () => {
           backgroundColor: "#aaa",
         })
         .then((canvas) => {
-          chart.replaceChildren(canvas)
+          chart.replaceChildren(canvas);
         });
     })
     .catch((e) => {
