@@ -3,8 +3,8 @@ import { createCanvas, Image } from "canvas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "node-html-parser";
 import ReactDOMServer from "react-dom/server";
-import OgpImageChart from "../../../components/charts/OgpImageChart";
-import { fmp } from "../../../lib/financial-modeling-prep";
+import OgpImageChart from "../../../../../components/charts/OgpImageChart";
+import { fmp } from "../../../../../lib/financial-modeling-prep";
 
 type Data = {
   [key: string]: string;
@@ -14,10 +14,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const symbol = "AAPL";
-  const [imageWidth, imageHeight] = [1200, 630];
+  const { type, symbol, params } = req.query;
+  if (typeof symbol !== "string")
+    return res.status(400).json({ error: "Request errors." });
   const data = (await fmp.incomeStatement(symbol, { limit: 5 })).reverse();
 
+  const [imageWidth, imageHeight] = [1200, 630];
   const chartHTMLString = ReactDOMServer.renderToStaticMarkup(
     OgpImageChart({ symbol, data, width: imageWidth, height: imageHeight })
   );
