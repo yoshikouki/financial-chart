@@ -52,7 +52,7 @@ function OgpImageChart({ symbol, data, width, height }: Props) {
     <BarChart
       data={data}
       width={width}
-      height={height}
+      height={height * 0.99}
       margin={{
         top: marginTop,
         bottom: marginBottom,
