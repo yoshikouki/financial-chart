@@ -16,7 +16,6 @@ export default async function handler(
 ) {
   const symbol = "AAPL";
   const [imageWidth, imageHeight] = [1200, 630];
-  const [chartWidth, chartHeight] = [imageWidth * 0.8, imageHeight * 0.85];
   const data = (await fmp.incomeStatement(symbol, { limit: 5 })).reverse();
 
   const chartHTMLString = ReactDOMServer.renderToStaticMarkup(
@@ -34,13 +33,7 @@ export default async function handler(
 
   const canvas = createCanvas(imageWidth, imageHeight);
   const ctx = canvas.getContext("2d");
-  ctx.drawImage(
-    img,
-    (imageWidth - chartWidth) / 2,
-    (imageHeight - chartHeight) / 1.5,
-    chartWidth,
-    chartHeight
-  );
+  ctx.drawImage(img, 0, 0);
 
   const buffer = canvas.toBuffer();
 

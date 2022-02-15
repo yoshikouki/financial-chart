@@ -33,6 +33,10 @@ const shortMonthlyDateFormat = (value: string): string => {
 };
 
 function OgpImageChart({ symbol, data, width, height }: Props) {
+  const marginTop = height * 0.05;
+  const marginBottom = height * 0.05;
+  const marginLeft = width * 0.1;
+  const marginRight = width * 0.1;
   const fontSize = 30;
   const radiusRounded = fontSize * 1.2;
   const fontFamily = "sans-serif";
@@ -45,8 +49,19 @@ function OgpImageChart({ symbol, data, width, height }: Props) {
     .colors(5);
 
   return (
-    <BarChart data={data} width={width} height={height} barCategoryGap={0}>
-      <text y={fontSize} textAnchor="start">
+    <BarChart
+      data={data}
+      width={width}
+      height={height}
+      margin={{
+        top: marginTop,
+        bottom: marginBottom,
+        left: marginLeft,
+        right: marginRight,
+      }}
+      barCategoryGap={0}
+    >
+      <text x={marginLeft} y={marginTop + fontSize} textAnchor="start">
         <tspan
           fontSize={fontSize}
           fontWeight="bold"
