@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts";
 
-interface Props {
+export interface OgpImageChartProps {
   symbol: string;
   data: any[];
   width: number;
@@ -32,7 +32,7 @@ const shortMonthlyDateFormat = (value: string): string => {
   return `${yearString}-${monthString}`;
 };
 
-function OgpImageChart({ symbol, data, width, height }: Props) {
+function OgpImageChart({ symbol, data, width, height }: OgpImageChartProps) {
   const marginTop = height * 0.05;
   const marginBottom = height * 0.05;
   const marginLeft = width * 0.1;
