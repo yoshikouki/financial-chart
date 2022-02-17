@@ -10,7 +10,7 @@ type Data = {
   [key: string]: string;
 };
 
-const renderImageBufferFromChart = async (
+const renderImageBufferFromChart = (
   rechartElement: JSX.Element,
   imageWidth: number = 1200,
   imageHeight: number = 630
@@ -31,12 +31,9 @@ const renderImageBufferFromChart = async (
   return canvas.toBuffer();
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  const { type, symbol, params } = req.query;
-  if (!(typeof type == "string" && typeof symbol == "string"))
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const { symbol, params } = req.query;
+  if (typeof symbol !== "string")
     return res.status(400).json({ error: "Request errors." });
   const data = (await fmp.incomeStatement(symbol, { limit: 5 })).reverse();
 
@@ -47,7 +44,7 @@ export default async function handler(
     width: imageWidth,
     height: imageHeight,
   });
-  const buffer = await renderImageBufferFromChart(
+  const buffer = renderImageBufferFromChart(
     rechartElement,
     imageWidth,
     imageHeight
@@ -58,4 +55,6 @@ export default async function handler(
     "Content-Length": buffer.length,
   });
   res.end(buffer, "binary");
-}
+};
+
+export default handler;
