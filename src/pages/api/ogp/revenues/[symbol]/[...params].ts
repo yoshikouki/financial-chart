@@ -32,17 +32,22 @@ const renderImageBufferFromChart = (
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const [imageWidth, imageHeight] = [1200, 630];
+  const dataNumber = 8;
+
   const { symbol, params } = req.query;
   if (typeof symbol !== "string")
     return res.status(400).json({ error: "Request errors." });
-  const data = (await fmp.incomeStatement(symbol, { limit: 5 })).reverse();
+  const data = (
+    await fmp.incomeStatement(symbol, { period: "quarter", limit: dataNumber })
+  ).reverse();
 
-  const [imageWidth, imageHeight] = [1200, 630];
   const rechartElement = OgpImageChart({
     symbol,
     data,
     width: imageWidth,
     height: imageHeight,
+    dataNumber: dataNumber,
   });
   const buffer = renderImageBufferFromChart(
     rechartElement,
