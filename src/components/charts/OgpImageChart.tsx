@@ -95,7 +95,7 @@ const OgpImageChart = ({
         })}
         <LabelList
           dataKey="revenue"
-          formatter={(value) => shortNumberFormat(value)}
+          formatter={(value: number) => shortNumberFormat(value)}
           position="insideTop"
           dy={fontSize}
           fill="white"
