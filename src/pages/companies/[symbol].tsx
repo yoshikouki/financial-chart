@@ -1,8 +1,8 @@
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { ResponsiveBarChart } from "../../components/charts/ResponsiveBarChart";
 import { DefaultLayout } from "../../components/layouts/default";
+import { useIncomeStatements } from "../../hooks/api/income-statements";
 import { FmpIncomeStatementResponse } from "../../lib/financial-modeling-prep/fundamental";
 
 interface Props {
@@ -11,22 +11,12 @@ interface Props {
 
 const CompanyPage = ({ data }: Props) => {
   const router = useRouter();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [incomeStatementData, setIncomeStatementData] = useState<any[]>([]);
   const symbol =
     typeof router.query.symbol === "string"
       ? router.query.symbol.toUpperCase()
       : "AAPL";
+  const { incomeStatementData, isLoaded } = useIncomeStatements(symbol);
 
-  useEffect(() => {
-    void (async () => {
-      const res = await fetch(
-        `${window.location.origin}/api/income-statements/${symbol}`
-      );
-      setIncomeStatementData(await res.json());
-      setIsLoaded(true);
-    })();
-  }, [symbol]);
   return (
     <DefaultLayout>
       <h1>{symbol}</h1>
