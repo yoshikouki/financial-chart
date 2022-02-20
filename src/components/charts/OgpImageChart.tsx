@@ -1,20 +1,12 @@
 import chroma from "chroma-js";
-import React from "react";
-import {
-  Bar,
-  BarChart,
-  Cell,
-  LabelList,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
 
-interface Props {
+export interface OgpImageChartProps {
   symbol: string;
   data: any[];
   width: number;
   height: number;
+  dataNumber: number;
 }
 
 const shortNumberFormat = (value: number): string => {
@@ -32,13 +24,19 @@ const shortMonthlyDateFormat = (value: string): string => {
   return `${yearString}-${monthString}`;
 };
 
-function OgpImageChart({ symbol, data, width, height }: Props) {
+const OgpImageChart = ({
+  symbol,
+  data,
+  width,
+  height,
+  dataNumber,
+}: OgpImageChartProps) => {
   const marginTop = height * 0.05;
   const marginBottom = height * 0.05;
   const marginLeft = width * 0.1;
   const marginRight = width * 0.1;
   const fontSize = 30;
-  const radiusRounded = fontSize * 1.2;
+  const radiusRounded = fontSize * 0.8;
   const fontFamily = "sans-serif";
   const fontColor = "#444F5A";
   const baseColor = chroma.random();
@@ -46,7 +44,7 @@ function OgpImageChart({ symbol, data, width, height }: Props) {
     .scale([baseColor, baseColor.darken()])
     .mode("lab")
     .correctLightness()
-    .colors(5);
+    .colors(dataNumber);
 
   return (
     <BarChart
@@ -59,18 +57,8 @@ function OgpImageChart({ symbol, data, width, height }: Props) {
         left: marginLeft,
         right: marginRight,
       }}
-      barCategoryGap={0}
+      barCategoryGap={1}
     >
-      <text x={marginLeft} y={marginTop + fontSize} textAnchor="start">
-        <tspan
-          fontSize={fontSize}
-          fontWeight="bold"
-          fontFamily={fontFamily}
-          fill={fontColor}
-        >
-          売上高 {symbol}
-        </tspan>
-      </text>
       <XAxis
         dataKey="date"
         tickFormatter={(value) => shortMonthlyDateFormat(value)}
@@ -107,18 +95,27 @@ function OgpImageChart({ symbol, data, width, height }: Props) {
         })}
         <LabelList
           dataKey="revenue"
-          formatter={(value) => shortNumberFormat(value)}
+          formatter={(value: number) => shortNumberFormat(value)}
           position="insideTop"
           dy={fontSize}
           fill="white"
-          fontSize={fontSize * 1.3}
+          fontSize={fontSize}
           fontWeight="bold"
           fontFamily={fontFamily}
         />
       </Bar>
-      <Tooltip />
+      <text x={marginLeft} y={marginTop + fontSize} textAnchor="start">
+        <tspan
+          fontSize={fontSize}
+          fontWeight="bold"
+          fontFamily={fontFamily}
+          fill={fontColor}
+        >
+          売上高 {symbol}
+        </tspan>
+      </text>
     </BarChart>
   );
-}
+};
 
 export default OgpImageChart;

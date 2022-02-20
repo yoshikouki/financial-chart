@@ -1,6 +1,6 @@
 import { get } from "./fetcher";
 
-export type incomeStatementResponse = {
+export type FmpIncomeStatementResponse = {
   date: string;
   symbol: string;
   reportedCurrency: string;
@@ -47,6 +47,6 @@ export const incomeStatement = async (
     period?: "annual" | "quarter";
     limit?: number | null;
   }
-): Promise<incomeStatementResponse> => {
+): Promise<FmpIncomeStatementResponse> => {
   return await get(`api/v3/income-statement/${symbol}`, params);
 };

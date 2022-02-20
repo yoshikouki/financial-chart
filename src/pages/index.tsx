@@ -1,11 +1,11 @@
 import type { GetServerSideProps } from "next";
-import { DefaultLayout } from "../components/layouts/default";
 import { ResponsiveBarChart } from "../components/charts/ResponsiveBarChart";
+import { DefaultLayout } from "../components/layouts/default";
 import { fmp } from "../lib/financial-modeling-prep";
-import { incomeStatementResponse } from "../lib/financial-modeling-prep/fundamental";
+import { FmpIncomeStatementResponse } from "../lib/financial-modeling-prep/fundamental";
 
 interface Props {
-  data: incomeStatementResponse;
+  data: FmpIncomeStatementResponse;
 }
 
 const HomePage = ({ data }: Props) => {
