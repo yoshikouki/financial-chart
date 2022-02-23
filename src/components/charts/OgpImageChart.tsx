@@ -89,7 +89,7 @@ const OgpImageChart = ({
             <Cell
               key={`cell-${index}`}
               fill={colors[index % colors.length]}
-              radius={radius}
+              radius={radius as unknown as string}
             />
           );
         })}

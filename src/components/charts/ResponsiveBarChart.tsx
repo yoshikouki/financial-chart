@@ -7,7 +7,11 @@ import {
   YAxis,
 } from "recharts";
 
-export const ResponsiveBarChart = ({ data }) => {
+interface Props {
+  data: any[];
+}
+
+export const ResponsiveBarChart = ({ data }: Props) => {
   return (
     <ResponsiveContainer
       width={"100%"}
