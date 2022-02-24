@@ -1,13 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 type OgpHeadProps = {
   title?: string;
   description?: string;
   type?: "website" | "blog" | "article";
   site_name?: string;
-  hostUrl?: string;
+  host?: string;
   imagePath?: string;
 };
 
@@ -16,22 +15,14 @@ export const OgpHead = ({
   description = "「投資をもっと身近に」をコンセプトに投資に関する情報を、視覚的に表現してわかり易く配信するサイト。",
   type = "website",
   site_name = "Financial Charts",
-  hostUrl = "https://financial-chart.com",
+  host = `https://${process.env.host}`,
   imagePath = "/api/ogp/revenues/AAPL/20220219",
 }: OgpHeadProps) => {
   const router = useRouter();
-  const [host, setHost] = useState(hostUrl);
-  const url = `${host}${router.pathname}`;
-  console.info(url);
+  const url = `${host}${router.asPath}`;
   const imageUrl = imagePath.startsWith("/")
     ? `${host}${imagePath}`
     : `${host}/${imagePath}`;
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setHost(window.location.origin);
-    }
-  }, []);
 
   return (
     <Head>
