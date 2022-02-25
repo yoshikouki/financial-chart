@@ -27,6 +27,8 @@ const renderImageBufferFromChart = (
   const ctx = canvas.getContext("2d");
   const img = new Image();
   img.src = `data:image/svg+xml,<?xml version="1.0"?>${chartSVG.toString()}`;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, imageWidth, imageHeight);
   ctx.drawImage(img, 0, 0);
   return canvas.toBuffer();
 };
