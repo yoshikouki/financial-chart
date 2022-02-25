@@ -22,11 +22,11 @@ const renderImageBufferFromChart = (
     xmlns: "http://www.w3.org/2000/svg",
     "xmlns:xlink": "http://www.w3.org/1999/xlink",
   });
+  const img = new Image();
+  img.src = `data:image/svg+xml,<?xml version="1.0"?>${chartSVG.toString()}`;
 
   const canvas = createCanvas(imageWidth, imageHeight);
   const ctx = canvas.getContext("2d");
-  const img = new Image();
-  img.src = `data:image/svg+xml,<?xml version="1.0"?>${chartSVG.toString()}`;
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, imageWidth, imageHeight);
   ctx.drawImage(img, 0, 0);
