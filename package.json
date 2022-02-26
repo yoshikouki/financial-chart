@@ -14,7 +14,7 @@
     "canvas": "^2.9.0",
     "chroma-js": "^2.4.2",
     "html2canvas": "^1.4.1",
-    "next": "12.0.9",
+    "next": "^12.1.0",
     "node-html-parser": "^5.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
