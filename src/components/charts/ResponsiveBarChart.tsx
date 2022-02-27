@@ -1,34 +1,31 @@
 import { Skeleton } from "@mui/material";
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { ResponsiveContainer } from "recharts";
+import RoundedBarChart from "./RoundedBarChart";
 
 interface Props {
   data: any[];
-  dataKey: string;
+  XDataKey: string;
+  YDataKey: string;
   isLoaded?: boolean;
   height?: number;
 }
 
 export const ResponsiveBarChart = ({
   data,
-  dataKey,
+  XDataKey,
+  YDataKey,
   isLoaded = true,
   height = 300,
 }: Props) => {
   return isLoaded ? (
     <ResponsiveContainer width={"100%"} height={height}>
-      <BarChart data={data}>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey={dataKey} fill="#8884d8" isAnimationActive={false} />
-      </BarChart>
+      {/* Recharts は関連コンポーネントを別コンポーネントに切り出すことができない。関数呼び出しでは動作するのでワークアラウンド */}
+      {RoundedBarChart({
+        data: data,
+        YDataKey: YDataKey,
+        XDataKey: XDataKey,
+        height: height,
+      })}
     </ResponsiveContainer>
   ) : (
     <Skeleton variant="rectangular" animation="wave" sx={{ height: height }} />

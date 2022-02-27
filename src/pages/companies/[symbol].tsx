@@ -30,28 +30,32 @@ const CompanyPage = ({ data }: Props) => {
 
       <h2>売上高</h2>
       <ResponsiveBarChart
-        dataKey="revenue"
+        YDataKey="revenue"
+        XDataKey="date"
         data={incomeStatementData}
         isLoaded={isLoaded}
       />
 
       <h2>EPS</h2>
       <ResponsiveBarChart
-        dataKey="eps"
+        YDataKey="eps"
+        XDataKey="date"
         data={incomeStatementData}
         isLoaded={isLoaded}
       />
 
       <h2>営業利益</h2>
       <ResponsiveBarChart
-        dataKey="operatingIncome"
+        YDataKey="operatingIncome"
+        XDataKey="date"
         data={incomeStatementData}
         isLoaded={isLoaded}
       />
 
       <h2>純利益</h2>
       <ResponsiveBarChart
-        dataKey="netIncome"
+        YDataKey="netIncome"
+        XDataKey="date"
         data={incomeStatementData}
         isLoaded={isLoaded}
       />
