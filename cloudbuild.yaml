@@ -7,9 +7,6 @@ steps:
   args: ["run", "build"]
 - name: "gcr.io/cloud-builders/gcloud"
   entrypoint: "bash"
-  args: ["-c", 'echo "  TEST_ENV: $_TEST_ENV" >> secret.yaml']
-- name: "gcr.io/cloud-builders/gcloud"
-  entrypoint: "bash"
   args: ["-c", 'echo "  FINANCIAL_MODELING_PREP_API_KEY: $_FINANCIAL_MODELING_PREP_API_KEY" >> secret.yaml']
 - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
   entrypoint: "bash"
