@@ -1,5 +1,6 @@
-import { createTheme } from "@mui/material";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
+import { ReactNode } from "react";
 
 export const theme = createTheme({
   spacing: 8, // spacing(1) = 0.5rem = 8px
@@ -15,6 +16,10 @@ export const theme = createTheme({
     },
     error: {
       main: red.A400,
+    },
+    background: {
+      default: "#E5E5E5",
+      paper: "#FFFFFF",
     },
   },
   typography: {
@@ -37,3 +42,10 @@ export const theme = createTheme({
     },
   },
 });
+
+export const MuiTheme = (props: { children: ReactNode }) => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    {props.children}
+  </ThemeProvider>
+);

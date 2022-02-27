@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { MuiTheme } from "../components/MuiTheme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <MuiTheme>
+        <Component {...pageProps} />
+      </MuiTheme>
     </>
   );
 }
