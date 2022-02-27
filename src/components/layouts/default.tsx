@@ -21,9 +21,9 @@ export const DefaultLayout = (props: DefaultLayoutProps) => {
         />
       </Head>
       <TopNavigationBar {...props} />
-      <main>
-        <Container maxWidth="lg">{props.children}</Container>
-      </main>
+      <Container maxWidth="lg" component="main">
+        {props.children}
+      </Container>
       <BottomNavigationBar {...props} />
     </>
   );
