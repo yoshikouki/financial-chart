@@ -25,10 +25,15 @@ const CompanyPage = ({ data }: Props) => {
   const ogpImagePath = `/api/ogp/revenues/${symbol}/${todayString}`;
 
   return (
-    <DefaultLayout>
+    <DefaultLayout title={symbol}>
       <OgpHead imagePath={ogpImagePath} />
-      <h1>{symbol}</h1>
       <h2>売上高</h2>
+      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <h2>EPS</h2>
+      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <h2>営業利益率</h2>
+      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <h2>純利益</h2>
       {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
     </DefaultLayout>
   );

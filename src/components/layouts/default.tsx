@@ -1,20 +1,30 @@
+import { Container } from "@mui/material";
 import Head from "next/head";
 import { ReactNode } from "react";
+import BottomNavigationBar from "../BottomNavigationBar";
+import TopNavigationBar from "../TopNavigationBar";
 
-export const DefaultLayout = (props: {
+export interface DefaultLayoutProps {
   title?: string;
   children?: ReactNode;
-}) => {
+}
+
+export const DefaultLayout = (props: DefaultLayoutProps) => {
+  const metaTitle = `${props.title} - Financial Chart` || "Financial Chart";
   return (
     <>
       <Head>
-        <title>{props.title || "Financial Chart"}</title>
+        <title>{metaTitle}</title>
         <meta
           name="description"
           content="Financial Chart is great application for Private investor."
         />
       </Head>
-      <main>{props.children}</main>
+      <TopNavigationBar {...props} />
+      <Container maxWidth="lg" component="main">
+        {props.children}
+      </Container>
+      <BottomNavigationBar {...props} />
     </>
   );
 };
