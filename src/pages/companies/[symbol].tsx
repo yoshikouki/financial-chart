@@ -27,14 +27,34 @@ const CompanyPage = ({ data }: Props) => {
   return (
     <DefaultLayout title={symbol}>
       <OgpHead imagePath={ogpImagePath} />
+
       <h2>売上高</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <ResponsiveBarChart
+        dataKey="revenue"
+        data={incomeStatementData}
+        isLoaded={isLoaded}
+      />
+
       <h2>EPS</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
-      <h2>営業利益率</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <ResponsiveBarChart
+        dataKey="eps"
+        data={incomeStatementData}
+        isLoaded={isLoaded}
+      />
+
+      <h2>営業利益</h2>
+      <ResponsiveBarChart
+        dataKey="operatingIncome"
+        data={incomeStatementData}
+        isLoaded={isLoaded}
+      />
+
       <h2>純利益</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+      <ResponsiveBarChart
+        dataKey="netIncome"
+        data={incomeStatementData}
+        isLoaded={isLoaded}
+      />
     </DefaultLayout>
   );
 };
