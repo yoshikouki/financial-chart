@@ -1,5 +1,9 @@
 import chroma from "chroma-js";
-import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
+import { BarChart, XAxis, YAxis, Bar, Cell, LabelList } from "recharts";
+import {
+  formatToShortMonthlyDate,
+  formatToShortNumber,
+} from "../../lib/format";
 
 export interface OgpImageChartProps {
   symbol: string;
@@ -8,21 +12,6 @@ export interface OgpImageChartProps {
   height: number;
   dataNumber: number;
 }
-
-const shortNumberFormat = (value: number): string => {
-  const formatter = new Intl.NumberFormat("en", {
-    notation: "compact",
-    compactDisplay: "short",
-  });
-  return formatter.format(value);
-};
-
-const shortMonthlyDateFormat = (value: string): string => {
-  const date = new Date(value);
-  const yearString = date.getFullYear();
-  const monthString = (date.getMonth() + 1).toString().padStart(2, "0");
-  return `${yearString}-${monthString}`;
-};
 
 const OgpImageChart = ({
   symbol,
@@ -61,7 +50,7 @@ const OgpImageChart = ({
     >
       <XAxis
         dataKey="date"
-        tickFormatter={(value) => shortMonthlyDateFormat(value)}
+        tickFormatter={(value) => formatToShortMonthlyDate(value)}
         axisLine={false}
         dy={10}
         tickSize={0}
@@ -95,7 +84,7 @@ const OgpImageChart = ({
         })}
         <LabelList
           dataKey="revenue"
-          formatter={(value: number) => shortNumberFormat(value)}
+          formatter={(value: number) => formatToShortNumber(value)}
           position="insideTop"
           dy={fontSize}
           fill="white"
