@@ -9,10 +9,11 @@ export interface DefaultLayoutProps {
 }
 
 export const DefaultLayout = (props: DefaultLayoutProps) => {
+  const metaTitle = `${props.title} - Financial Chart` || "Financial Chart";
   return (
     <>
       <Head>
-        <title>{props.title || "Financial Chart"}</title>
+        <title>{metaTitle}</title>
         <meta
           name="description"
           content="Financial Chart is great application for Private investor."
