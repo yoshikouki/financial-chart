@@ -1,10 +1,14 @@
+import { Container } from "@mui/material";
 import Head from "next/head";
 import { ReactNode } from "react";
+import TopNavigationBar from "../TopNavigationBar";
 
-export const DefaultLayout = (props: {
+export interface DefaultLayoutProps {
   title?: string;
   children?: ReactNode;
-}) => {
+}
+
+export const DefaultLayout = (props: DefaultLayoutProps) => {
   return (
     <>
       <Head>
@@ -14,7 +18,10 @@ export const DefaultLayout = (props: {
           content="Financial Chart is great application for Private investor."
         />
       </Head>
-      <main>{props.children}</main>
+      <TopNavigationBar {...props} />
+      <main>
+        <Container maxWidth="lg">{props.children}</Container>
+      </main>
     </>
   );
 };

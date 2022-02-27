@@ -25,9 +25,8 @@ const CompanyPage = ({ data }: Props) => {
   const ogpImagePath = `/api/ogp/revenues/${symbol}/${todayString}`;
 
   return (
-    <DefaultLayout>
+    <DefaultLayout title={symbol}>
       <OgpHead imagePath={ogpImagePath} />
-      <h1>{symbol}</h1>
       <h2>売上高</h2>
       {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
     </DefaultLayout>
