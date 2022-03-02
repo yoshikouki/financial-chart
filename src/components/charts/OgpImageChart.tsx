@@ -3,7 +3,7 @@ import { BarChart, XAxis, YAxis, Bar, Cell, LabelList } from "recharts";
 import {
   formatToShortMonthlyDate,
   formatToShortNumber,
-} from "../../lib/format";
+} from "../../utils/format";
 
 export interface OgpImageChartProps {
   symbol: string;

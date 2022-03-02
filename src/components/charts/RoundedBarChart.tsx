@@ -3,7 +3,7 @@ import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
 import {
   formatToShortMonthlyDate,
   formatToShortNumber,
-} from "../../lib/format";
+} from "../../utils/format";
 
 interface RoundedBarChartProps {
   data: any[];
