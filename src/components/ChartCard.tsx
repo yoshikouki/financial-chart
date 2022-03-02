@@ -1,5 +1,6 @@
 import { Paper } from "@mui/material";
 import { styled } from "@mui/system";
+import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
