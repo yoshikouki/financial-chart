@@ -1,4 +1,3 @@
-import { Container } from "@mui/material";
 import Head from "next/head";
 import { ReactNode } from "react";
 import BottomNavigationBar from "../BottomNavigationBar";
@@ -21,9 +20,7 @@ export const DefaultLayout = (props: DefaultLayoutProps) => {
         />
       </Head>
       <TopNavigationBar {...props} />
-      <Container maxWidth="lg" component="main">
-        {props.children}
-      </Container>
+      <main>{props.children}</main>
       <BottomNavigationBar />
     </>
   );

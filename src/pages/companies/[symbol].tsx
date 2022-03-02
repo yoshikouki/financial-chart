@@ -1,5 +1,8 @@
+import { Container, Typography } from "@mui/material";
+import { styled } from "@mui/system";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import ChartCard from "../../components/ChartCard";
 import { ResponsiveBarChart } from "../../components/charts/ResponsiveBarChart";
 import { OgpHead } from "../../components/head/OgpHead";
 import { DefaultLayout } from "../../components/layouts/default";
@@ -23,18 +26,50 @@ const CompanyPage = ({ data }: Props) => {
   const dateString = today.getDate().toString().padStart(2, "0");
   const todayString = `${today.getFullYear()}${monthString}${dateString}`;
   const ogpImagePath = `/api/ogp/revenues/${symbol}/${todayString}`;
+  const incomeStatementList = [
+    {
+      title: "売上高",
+      yDataKey: "revenue",
+      xDataKey: "date",
+    },
+    {
+      title: "EPS",
+      yDataKey: "eps",
+      xDataKey: "date",
+    },
+    {
+      title: "営業利益",
+      yDataKey: "operatingIncome",
+      xDataKey: "date",
+    },
+    {
+      title: "純利益",
+      yDataKey: "netIncome",
+      xDataKey: "date",
+    },
+  ];
 
   return (
     <DefaultLayout title={symbol}>
       <OgpHead imagePath={ogpImagePath} />
-      <h2>売上高</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
-      <h2>EPS</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
-      <h2>営業利益率</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
-      <h2>純利益</h2>
-      {isLoaded ? <ResponsiveBarChart data={incomeStatementData} /> : "Loading"}
+
+      <Wrapper maxWidth="lg">
+        {incomeStatementList.map((data, i) => {
+          return (
+            <CardWrapper key={i}>
+              <ChartCard>
+                <Typography component="h2">{data.title}</Typography>
+                <ResponsiveBarChart
+                  yDataKey={data.yDataKey}
+                  xDataKey={data.xDataKey}
+                  data={incomeStatementData}
+                  isLoaded={isLoaded}
+                />
+              </ChartCard>
+            </CardWrapper>
+          );
+        })}
+      </Wrapper>
     </DefaultLayout>
   );
 };
@@ -44,5 +79,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {},
   };
 };
+
+const CardWrapper = styled("div")(({ theme }) => ({
+  paddingBottom: theme.spacing(5),
+}));
+
+const Wrapper = styled(Container)(({ theme }) => ({
+  paddingTop: theme.spacing(5),
+  paddingBottom: theme.spacing(5),
+}));
 
 export default CompanyPage;
