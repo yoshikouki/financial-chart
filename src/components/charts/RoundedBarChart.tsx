@@ -1,5 +1,5 @@
-import chroma from "chroma-js";
 import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
+import { randomScaleColor } from "../../utils/color";
 import {
   formatToShortMonthlyDate,
   formatToShortNumber,
@@ -21,12 +21,7 @@ const RoundedBarChart = ({
   const fontSize = 30;
   const radiusRounded = fontSize * 0.8;
   const fontColor = "#444F5A";
-  const baseColor = chroma.random();
-  const colors = chroma
-    .scale([baseColor, baseColor.darken()])
-    .mode("lab")
-    .correctLightness()
-    .colors(data.length);
+  const colors = randomScaleColor(data.length);
 
   return (
     <BarChart data={data} height={height} barCategoryGap={1}>

@@ -1,5 +1,5 @@
-import chroma from "chroma-js";
-import { BarChart, XAxis, YAxis, Bar, Cell, LabelList } from "recharts";
+import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
+import { randomScaleColor } from "../../utils/color";
 import {
   formatToShortMonthlyDate,
   formatToShortNumber,
@@ -28,12 +28,7 @@ const OgpImageChart = ({
   const radiusRounded = fontSize * 0.8;
   const fontFamily = "sans-serif";
   const fontColor = "#444F5A";
-  const baseColor = chroma.random();
-  const colors = chroma
-    .scale([baseColor, baseColor.darken()])
-    .mode("lab")
-    .correctLightness()
-    .colors(dataNumber);
+  const colors = randomScaleColor(data.length);
 
   return (
     <BarChart
