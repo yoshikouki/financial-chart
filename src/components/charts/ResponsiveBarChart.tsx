@@ -4,16 +4,16 @@ import RoundedBarChart from "./RoundedBarChart";
 
 interface Props {
   data: any[];
-  XDataKey: string;
-  YDataKey: string;
+  yDataKey: string;
+  xDataKey: string;
   isLoaded?: boolean;
   height?: number;
 }
 
 export const ResponsiveBarChart = ({
   data,
-  XDataKey,
-  YDataKey,
+  yDataKey,
+  xDataKey,
   isLoaded = true,
   height = 300,
 }: Props) => {
@@ -22,8 +22,8 @@ export const ResponsiveBarChart = ({
       {/* Recharts は関連コンポーネントを別コンポーネントに切り出すことができない。関数呼び出しでは動作するのでワークアラウンド */}
       {RoundedBarChart({
         data: data,
-        YDataKey: YDataKey,
-        XDataKey: XDataKey,
+        yDataKey: yDataKey,
+        xDataKey: xDataKey,
         height: height,
       })}
     </ResponsiveContainer>

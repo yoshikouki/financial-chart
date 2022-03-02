@@ -7,18 +7,17 @@ import {
 
 interface RoundedBarChartProps {
   data: any[];
-  YDataKey: string;
-  XDataKey: string;
+  yDataKey: string;
+  xDataKey: string;
   height: number;
 }
 
 const RoundedBarChart = ({
   data,
-  XDataKey,
-  YDataKey,
+  yDataKey,
+  xDataKey,
   height,
 }: RoundedBarChartProps) => {
-  const fontFamily = "Roboto";
   const fontSize = 30;
   const radiusRounded = fontSize * 0.8;
   const fontColor = "#444F5A";
@@ -32,18 +31,17 @@ const RoundedBarChart = ({
   return (
     <BarChart data={data} height={height} barCategoryGap={1}>
       <XAxis
-        dataKey={XDataKey}
+        dataKey={xDataKey}
         tickFormatter={(value) => formatToShortMonthlyDate(value)}
         axisLine={false}
         dy={10}
         tickSize={0}
         fontSize={fontSize}
         fontWeight="bold"
-        fontFamily={fontFamily}
         stroke={fontColor}
       />
       <YAxis hide />
-      <Bar dataKey={YDataKey} fill="#8884d8">
+      <Bar dataKey={yDataKey} fill="#8884d8">
         {data.map((entry, index) => {
           let radius: number[];
           switch (index) {
@@ -66,14 +64,13 @@ const RoundedBarChart = ({
           );
         })}
         <LabelList
-          dataKey={YDataKey}
+          dataKey={yDataKey}
           formatter={(value: number) => formatToShortNumber(value)}
           position="insideTop"
           dy={fontSize}
           fill="white"
           fontSize={fontSize}
           fontWeight="bold"
-          fontFamily={fontFamily}
         />
       </Bar>
     </BarChart>
