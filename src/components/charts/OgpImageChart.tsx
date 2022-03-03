@@ -4,6 +4,7 @@ import {
   formatToShortMonthlyDate,
   formatToShortNumber,
 } from "../../utils/format";
+import { calcRadius } from "./RoundedBarChart";
 
 export interface OgpImageChartProps {
   symbol: string;
@@ -56,27 +57,19 @@ const OgpImageChart = ({
       />
       <YAxis hide />
       <Bar dataKey="revenue" fill="#8884d8">
-        {data.map((entry, index) => {
-          let radius: number[];
-          switch (index) {
-            case 0:
-              radius = [radiusRounded, radiusRounded, 0, radiusRounded];
-              break;
-            case data.length - 1:
-              radius = [radiusRounded, radiusRounded, radiusRounded, 0];
-              break;
-            default:
-              radius = [radiusRounded, radiusRounded, 0, 0];
-              break;
-          }
-          return (
-            <Cell
-              key={`cell-${index}`}
-              fill={colors[index % colors.length]}
-              radius={radius as unknown as string}
-            />
-          );
-        })}
+        {data.map((_, index) => (
+          <Cell
+            key={`cell-${index}`}
+            fill={colors[index % colors.length]}
+            radius={
+              calcRadius(
+                radiusRounded,
+                index,
+                data.length - 1
+              ) as unknown as string
+            }
+          />
+        ))}
         <LabelList
           dataKey="revenue"
           formatter={(value: number) => formatToShortNumber(value)}

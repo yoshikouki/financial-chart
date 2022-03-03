@@ -1,19 +1,13 @@
 import { Container, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import ChartCard from "../../components/ChartCard";
 import { ResponsiveBarChart } from "../../components/charts/ResponsiveBarChart";
 import { OgpHead } from "../../components/head/OgpHead";
 import { DefaultLayout } from "../../components/layouts/default";
 import { useIncomeStatements } from "../../hooks/api/income-statements";
-import { FmpIncomeStatementResponse } from "../../lib/financial-modeling-prep/fundamental";
 
-interface Props {
-  data: FmpIncomeStatementResponse;
-}
-
-const CompanyPage = ({ data }: Props) => {
+const CompanyPage = () => {
   const router = useRouter();
   const symbol =
     typeof router.query.symbol === "string"
@@ -74,19 +68,12 @@ const CompanyPage = ({ data }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {},
-  };
-};
-
 const CardWrapper = styled("div")(({ theme }) => ({
   paddingBottom: theme.spacing(5),
 }));
 
 const Wrapper = styled(Container)(({ theme }) => ({
-  paddingTop: theme.spacing(5),
-  paddingBottom: theme.spacing(5),
+  padding: `${theme.spacing(5)} 0`,
 }));
 
 export default CompanyPage;
