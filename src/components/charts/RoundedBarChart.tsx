@@ -1,9 +1,18 @@
-import { Bar, BarChart, Cell, LabelList, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  LabelList,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { randomScaleColor } from "../../utils/color";
 import {
   formatToShortMonthlyDate,
   formatToShortNumber,
 } from "../../utils/format";
+import { theme } from "../MuiTheme";
 
 interface RoundedBarChartProps {
   data: any[];
@@ -18,58 +27,68 @@ const RoundedBarChart = ({
   xDataKey,
   height,
 }: RoundedBarChartProps) => {
-  const fontSize = 30;
-  const radiusRounded = fontSize * 0.8;
-  const fontColor = "#444F5A";
+  const radiusRounded = 16;
   const colors = randomScaleColor(data.length);
 
   return (
-    <BarChart data={data} height={height} barCategoryGap={1}>
+    <BarChart
+      data={data}
+      height={height - theme.typography.fontSize}
+      barCategoryGap={1}
+    >
       <XAxis
         dataKey={xDataKey}
         tickFormatter={(value) => formatToShortMonthlyDate(value)}
         axisLine={false}
-        dy={10}
+        dy={theme.typography.fontSize}
         tickSize={0}
-        fontSize={fontSize}
         fontWeight="bold"
-        stroke={fontColor}
       />
       <YAxis hide />
-      <Bar dataKey={yDataKey} fill="#8884d8">
-        {data.map((entry, index) => {
-          let radius: number[];
-          switch (index) {
-            case 0:
-              radius = [radiusRounded, radiusRounded, 0, radiusRounded];
-              break;
-            case data.length - 1:
-              radius = [radiusRounded, radiusRounded, radiusRounded, 0];
-              break;
-            default:
-              radius = [radiusRounded, radiusRounded, 0, 0];
-              break;
-          }
-          return (
-            <Cell
-              key={`cell-${index}`}
-              fill={colors[index % colors.length]}
-              radius={radius as unknown as string}
-            />
-          );
-        })}
+      <Tooltip />
+      <Bar dataKey={yDataKey} dy={30}>
+        {data.map((_, index) => (
+          <Cell
+            key={`cell-${index}`}
+            fill={colors[index % colors.length]}
+            radius={
+              calcRadius(
+                radiusRounded,
+                index,
+                data.length - 1
+              ) as unknown as string
+            }
+          />
+        ))}
         <LabelList
           dataKey={yDataKey}
           formatter={(value: number) => formatToShortNumber(value)}
-          position="insideTop"
-          dy={fontSize}
-          fill="white"
-          fontSize={fontSize}
+          alignmentBaseline="hanging"
+          position="top"
+          fill="gray"
           fontWeight="bold"
         />
       </Bar>
     </BarChart>
   );
+};
+
+export const calcRadius = (
+  radiusRounded: number,
+  index: number,
+  maxIndex: number
+) => {
+  switch (index) {
+    case 0:
+      return [radiusRounded, radiusRounded, 0, radiusRounded];
+      break;
+    case maxIndex:
+      return [radiusRounded, radiusRounded, radiusRounded, 0];
+      break;
+    default:
+      return [radiusRounded, radiusRounded, 0, 0];
+      break;
+  }
 };
 
 export default RoundedBarChart;

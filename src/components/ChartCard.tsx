@@ -7,7 +7,12 @@ interface Props {
 }
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(5),
+  [theme.breakpoints.down("sm")]: {
+    padding: `${theme.spacing(5)} ${theme.spacing(2)}`,
+  },
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(5),
+  },
 }));
 
 const ChartCard = (props: Props) => {
